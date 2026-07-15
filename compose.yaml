@@ -1,0 +1,93 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: karen-postgres
+    profiles: ["data", "full"]
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - karen_postgres:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT}:5432"
+    mem_limit: 512m
+
+  redis:
+    image: redis:8-alpine
+    container_name: karen-redis
+    profiles: ["data", "full"]
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - karen_redis:/data
+    ports:
+      - "127.0.0.1:${REDIS_PORT}:6379"
+    mem_limit: 256m
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: karen-qdrant
+    profiles: ["memory", "full"]
+    restart: unless-stopped
+    volumes:
+      - karen_qdrant:/qdrant/storage
+    ports:
+      - "127.0.0.1:${QDRANT_PORT}:6333"
+    mem_limit: 512m
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: karen-open-webui
+    profiles: ["ui", "full"]
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
+    volumes:
+      - karen_open_webui:/app/backend/data
+    ports:
+      - "127.0.0.1:${OPEN_WEBUI_PORT}:8080"
+    mem_limit: 1g
+
+  litellm:
+    image: ghcr.io/berriai/litellm:main-latest
+    container_name: karen-litellm
+    profiles: ["router", "full"]
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      LITELLM_MASTER_KEY: ${LITELLM_MASTER_KEY:-change-me}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+    volumes:
+      - ./configs/litellm/config.yaml:/app/config.yaml:ro
+    command: ["--config", "/app/config.yaml", "--port", "4000"]
+    ports:
+      - "127.0.0.1:4000:4000"
+    mem_limit: 512m
+
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    container_name: karen-n8n
+    profiles: ["automation", "full"]
+    restart: unless-stopped
+    environment:
+      N8N_HOST: 127.0.0.1
+      N8N_PORT: 5678
+      N8N_PROTOCOL: http
+      GENERIC_TIMEZONE: Asia/Kolkata
+    volumes:
+      - karen_n8n:/home/node/.n8n
+    ports:
+      - "127.0.0.1:${N8N_PORT}:5678"
+    mem_limit: 768m
+
+volumes:
+  karen_postgres:
+  karen_redis:
+  karen_qdrant:
+  karen_open_webui:
+  karen_n8n:
