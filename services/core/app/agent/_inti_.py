@@ -54,6 +54,7 @@ class ProposalRecord(BaseModel):
     id: str
     task: str
     summary: str
+
     status: Literal[
         "pending",
         "executed",
