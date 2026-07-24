@@ -65,3 +65,17 @@ class ProposalRecord(BaseModel):
     created_at: str
     results: list[dict[str, Any]] = Field(default_factory=list)
     error: str | None = None
+class CommandRequest(BaseModel):
+    argv: list[str] = Field(min_length=1, max_length=12)
+    cwd: str = "karen"
+    timeout_seconds: int = Field(default=30, ge=1, le=60)
+    confirm: bool = False
+
+
+class CommandResponse(BaseModel):
+    argv: list[str]
+    cwd: str
+    return_code: int
+    stdout: str
+    stderr: str
+    timed_out: bool = False
