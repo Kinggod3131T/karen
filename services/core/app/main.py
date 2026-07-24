@@ -14,10 +14,10 @@ from services.core.app.settings import settings
 
 app = FastAPI(
     title=settings.app_name,
-    version="0.8.0",
+    version="0.9.0",
     description=(
         "Local-first AI workstation orchestration service "
-        "with approval-gated tools and project intelligence."
+        "with approval-gated tools and project-aware AI context."
     ),
 )
 
