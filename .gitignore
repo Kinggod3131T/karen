@@ -43,3 +43,8 @@ Thumbs.db
 logs/*.jsonl
 memory/proposals/*.json
 .karen/
+# Karen runtime state
+memory/proposals/*.json
+!memory/proposals/.gitkeep
+logs/*.jsonl
+.karen/
