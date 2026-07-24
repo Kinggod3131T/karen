@@ -39,3 +39,7 @@ tmp/
 # OS
 .DS_Store
 Thumbs.db
+# Karen runtime state
+logs/*.jsonl
+memory/proposals/*.json
+.karen/

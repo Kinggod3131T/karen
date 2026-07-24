@@ -79,3 +79,42 @@ class CommandResponse(BaseModel):
     stdout: str
     stderr: str
     timed_out: bool = False
+class GitRepositoryRequest(BaseModel):
+    repository: str = "karen"
+
+
+class GitDiffRequest(BaseModel):
+    repository: str = "karen"
+    staged: bool = False
+
+
+class GitStageRequest(BaseModel):
+    repository: str = "karen"
+    paths: list[str] = Field(min_length=1, max_length=50)
+    confirm: bool = False
+
+
+class GitCommitRequest(BaseModel):
+    repository: str = "karen"
+    message: str = Field(min_length=1, max_length=200)
+    confirm: bool = False
+
+
+class GitBranchRequest(BaseModel):
+    repository: str = "karen"
+    branch: str = Field(min_length=1, max_length=100)
+    switch: bool = False
+    confirm: bool = False
+
+
+class GitCheckpointRequest(BaseModel):
+    repository: str = "karen"
+    label: str | None = Field(default=None, max_length=40)
+    confirm: bool = False
+
+
+class GitRestoreRequest(BaseModel):
+    repository: str = "karen"
+    paths: list[str] = Field(min_length=1, max_length=20)
+    source: str = "HEAD"
+    confirm: bool = False
