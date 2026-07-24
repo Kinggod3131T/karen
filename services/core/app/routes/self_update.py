@@ -147,6 +147,7 @@ USER REQUEST:
 
     record = CodingTaskRecord(
         id=str(uuid4()),
+        task_kind="self_update",
         project_path="karen",
         task=request.task,
         model=selected_model,
@@ -206,6 +207,10 @@ def finalize_self_update(
         message=message,
         confirm=True,
     )
+
+    record.status = "committed"
+    record.updated_at = _now()
+    save_task(record)
 
     return {
         "task_id": task_id,
