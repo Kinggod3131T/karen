@@ -56,6 +56,7 @@ export interface ReviewResult {
 
 export interface WorkflowTask {
   id: string;
+  task_kind?: "coding" | "self_update";
   project_path: string;
   task: string;
   model: string;
