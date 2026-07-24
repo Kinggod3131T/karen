@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+:root {
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #f4f4f5;
+  background: #050608;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: #050608;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      circle at 50% -15%,
+      rgba(139, 0, 25, 0.38),
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at 100% 40%,
+      rgba(80, 0, 15, 0.22),
+      transparent 30%
+    ),
+    linear-gradient(160deg, #08090c 0%, #030405 100%);
+}
+
+button,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+.glass-panel {
+  border: 1px solid rgba(255, 255, 255, 0.085);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.058),
+      rgba(255, 255, 255, 0.018)
+    );
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, 0.04),
+    0 24px 70px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(18px);
+}
+
+.karen-orb {
+  position: relative;
+  width: 92px;
+  height: 92px;
+  border-radius: 999px;
+  background:
+    radial-gradient(
+      circle at 48% 42%,
+      #ffffff 0%,
+      #ffd6dc 4%,
+      #ff5369 15%,
+      #cf0829 37%,
+      #55000d 60%,
+      #120003 78%
+    );
+  box-shadow:
+    0 0 18px rgba(255, 63, 87, 0.96),
+    0 0 56px rgba(255, 23, 57, 0.62),
+    0 0 120px rgba(255, 16, 50, 0.25);
+  animation: orb-pulse 2.8s ease-in-out infinite;
+}
+
+.karen-orb::before,
+.karen-orb::after {
+  content: "";
+  position: absolute;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 91, 111, 0.32);
+}
+
+.karen-orb::before {
+  inset: -15px;
+}
+
+.karen-orb::after {
+  inset: -29px;
+  border-color: rgba(255, 91, 111, 0.12);
+}
+
+.task-title {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+@keyframes orb-pulse {
+  0%,
+  100% {
+    transform: scale(0.96);
+    filter: brightness(0.92);
+  }
+
+  50% {
+    transform: scale(1.045);
+    filter: brightness(1.18);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: #07080a;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: #303239;
+}
