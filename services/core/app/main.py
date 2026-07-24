@@ -8,16 +8,17 @@ from services.core.app.routes import (
     project,
     system,
     terminal,
+    workflow,
 )
 from services.core.app.settings import settings
 
 
 app = FastAPI(
     title=settings.app_name,
-    version="0.9.0",
+    version="1.0.0",
     description=(
-        "Local-first AI workstation orchestration service "
-        "with approval-gated tools and project-aware AI context."
+        "Local-first coding agent with project intelligence, "
+        "approval-gated execution, verification and AI review."
     ),
 )
 
@@ -28,3 +29,4 @@ app.include_router(agent.router)
 app.include_router(terminal.router)
 app.include_router(git.router)
 app.include_router(project.router)
+app.include_router(workflow.router)
